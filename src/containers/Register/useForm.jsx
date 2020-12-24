@@ -1,10 +1,13 @@
 import { useContext, useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { register } from '../../context/actions/auth/register';
 import { GlobalContext } from '../../context/Provider';
 
 export default () => {
   const [form, setForm] = useState({});
   const [fieldErrors, setFieldErrors] = useState({});
+
+  const history = useHistory();
 
   const {
     authDispatch,
@@ -20,6 +23,12 @@ export default () => {
       }
     }
   }, [error]);
+
+  useEffect(() => {
+    if (data) {
+      history.push('/auth/login');
+    }
+  }, [data]);
 
   console.log('error :>> ', error);
 
