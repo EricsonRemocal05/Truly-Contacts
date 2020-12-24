@@ -8,7 +8,9 @@ import {
 } from 'semantic-ui-react';
 import Header from '../../components/Header';
 
-const RegisterUI = ({ form: { onChange, form, registerFormValid } }) => {
+const RegisterUI = ({
+  form: { onChange, form, registerFormValid, onSubmit, loading, fieldErrors },
+}) => {
   return (
     <div>
       <Header />
@@ -24,6 +26,12 @@ const RegisterUI = ({ form: { onChange, form, registerFormValid } }) => {
                   name='username'
                   placeholder='Username'
                   label='Username'
+                  error={
+                    fieldErrors.username && {
+                      content: fieldErrors.username,
+                      pointing: 'below',
+                    }
+                  }
                 />
               </Form.Field>
               <Form.Field>
@@ -33,6 +41,12 @@ const RegisterUI = ({ form: { onChange, form, registerFormValid } }) => {
                   name='firstName'
                   placeholder='First Name'
                   label='First Name'
+                  error={
+                    fieldErrors.first_name && {
+                      content: fieldErrors.first_name,
+                      pointing: 'below',
+                    }
+                  }
                 />
               </Form.Field>
               <Form.Field>
@@ -42,6 +56,12 @@ const RegisterUI = ({ form: { onChange, form, registerFormValid } }) => {
                   name='lastName'
                   placeholder='Last Name'
                   label='Last Name'
+                  error={
+                    fieldErrors.last_name && {
+                      content: fieldErrors.last_name,
+                      pointing: 'below',
+                    }
+                  }
                 />
               </Form.Field>
               <Form.Field>
@@ -52,6 +72,12 @@ const RegisterUI = ({ form: { onChange, form, registerFormValid } }) => {
                   type='email'
                   placeholder='Email'
                   label='Email'
+                  error={
+                    fieldErrors.email && {
+                      content: fieldErrors.email,
+                      pointing: 'below',
+                    }
+                  }
                 />
               </Form.Field>
               <Form.Field>
@@ -62,9 +88,22 @@ const RegisterUI = ({ form: { onChange, form, registerFormValid } }) => {
                   type='password'
                   placeholder='Password'
                   label='Password'
+                  error={
+                    fieldErrors.password && {
+                      content: fieldErrors.password,
+                      pointing: 'below',
+                    }
+                  }
                 />
               </Form.Field>
-              <Button disabled={registerFormValid} fluid primary type='submit'>
+              <Button
+                onClick={onSubmit}
+                disabled={registerFormValid || loading}
+                fluid
+                loading={loading}
+                primary
+                type='submit'
+              >
                 Submit
               </Button>
             </Form>
