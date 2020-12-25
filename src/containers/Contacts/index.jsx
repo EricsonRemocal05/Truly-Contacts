@@ -1,10 +1,18 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import Header from '../../components/Header';
+import getContacts from '../../context/actions/contacts/getContacts';
 import { GlobalContext } from '../../context/Provider';
 
 const ContactsContainer = () => {
   const context = useContext(GlobalContext);
-  console.log(context);
+
+  const history = useHistory();
+  // console.log(context);
+
+  useEffect(() => {
+    getContacts(history);
+  }, []);
 
   return (
     <div>

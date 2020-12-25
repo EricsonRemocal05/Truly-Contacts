@@ -3,7 +3,7 @@ import {
   REGISTER_LOADING,
   REGISTER_SUCCESS,
 } from '../../../constants/actionTypes';
-import axiosInstance from '../../../helpers/axios';
+import axiosInstance from '../../../helpers/axiosInstance';
 
 export const register = ({
   email,
@@ -15,7 +15,7 @@ export const register = ({
   dispatch({
     type: REGISTER_LOADING,
   });
-  axiosInstance
+  axiosInstance()
     .post('/auth/register', {
       email,
       password,
