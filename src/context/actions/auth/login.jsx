@@ -1,37 +1,30 @@
 import {
-  REGISTER_FAILURE,
-  REGISTER_LOADING,
-  REGISTER_SUCCESS,
+  LOGIN_FAILURE,
+  LOGIN_LOADING,
+  LOGIN_SUCCESS,
 } from '../../../constants/actionTypes';
 import axiosInstance from '../../../helpers/axios';
 
-export const register = ({
-  email,
-  password,
-  username,
-  lastName: last_name,
-  firstName: first_name,
-}) => (dispatch) => {
+export const login = ({ password, username }) => (dispatch) => {
   dispatch({
-    type: REGISTER_LOADING,
+    type: LOGIN_LOADING,
   });
+
   axiosInstance
-    .post('/auth/register', {
-      email,
+    .post('/auth/login', {
       password,
       username,
-      last_name,
-      first_name,
     })
     .then((res) => {
+      localStorage.token = res.data.token;
       dispatch({
-        type: REGISTER_SUCCESS,
+        type: LOGIN_SUCCESS,
         payload: res.data,
       });
     })
     .catch((err) =>
       dispatch({
-        type: REGISTER_FAILURE,
+        type: LOGIN_FAILURE,
         payload: err.response.data ? err.response.data : 'COULD NOT CONNECT',
       })
     );
