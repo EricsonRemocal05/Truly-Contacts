@@ -14,6 +14,8 @@ import isAuthenticated from './utils/isAuthenticated';
 const RenderRoute = (route) => {
   const history = useHistory();
 
+  document.title = route.title || 'TrulyContacts';
+
   if (route.needsAuth && !isAuthenticated()) {
     history.push('/auth/login');
   }
