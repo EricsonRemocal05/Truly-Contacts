@@ -11,7 +11,7 @@ import Header from '../../../components/Header';
 import countries from '../../../utils/countries';
 import './index.css';
 
-const CreateContact = ({ onChange }) => {
+const CreateContact = ({ onChange, onSubmit, formInvalid, loading }) => {
   return (
     <div>
       <Header />
@@ -49,7 +49,7 @@ const CreateContact = ({ onChange }) => {
                   />
                   <Form.Input
                     label='PhoneNumber'
-                    name='phoneNUmber'
+                    name='phoneNumber'
                     onChange={onChange}
                     placeholder='Phone Number'
                   />
@@ -61,7 +61,13 @@ const CreateContact = ({ onChange }) => {
                     onChange(e, { name: 'isFavorite', value: data.checked });
                   }}
                 />
-                <Button primary type='submit'>
+                <Button
+                  disabled={formInvalid || loading}
+                  onClick={onSubmit}
+                  primary
+                  type='submit'
+                  loading={loading}
+                >
                   Submit
                 </Button>
               </Form>

@@ -33,7 +33,7 @@ const ContactListUI = ({
         <List>
           {data.length &&
             data.map((contact) => (
-              <List.Item>
+              <List.Item key={contact.id}>
                 <List.Content floated='right'>
                   <span>{contact.phone_number}</span>
                 </List.Content>
