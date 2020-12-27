@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { register } from '../../context/actions/auth/register';
 import { GlobalContext } from '../../context/Provider';
 
+/* eslint import/no-anonymous-default-export: [2, {"allowArrowFunction": true}] */
 export default () => {
   const [form, setForm] = useState({});
   const [fieldErrors, setFieldErrors] = useState({});

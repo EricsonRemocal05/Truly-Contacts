@@ -1,4 +1,3 @@
-import logo from './assets/logo.svg';
 import {
   BrowserRouter as Router,
   Switch,
