@@ -9,6 +9,8 @@ import 'semantic-ui-css/semantic.min.css';
 import './App.css';
 import { GlobalProvider } from './context/Provider';
 import isAuthenticated from './utils/isAuthenticated';
+import { useState } from 'react';
+import UserLeaveConfirmation from './components/UserLeaveConfirmation';
 
 const RenderRoute = (route) => {
   const history = useHistory();
@@ -29,9 +31,20 @@ const RenderRoute = (route) => {
 };
 
 function App() {
+  const [confirmOpen, setConfirmOpen] = useState(true);
+
   return (
     <GlobalProvider>
-      <Router>
+      <Router
+        getUserConfirmation={(message, callback) => {
+          return UserLeaveConfirmation(
+            message,
+            callback,
+            confirmOpen,
+            setConfirmOpen
+          );
+        }}
+      >
         <Switch>
           {routes.map((route, index) => (
             <RenderRoute {...route} key={index} />

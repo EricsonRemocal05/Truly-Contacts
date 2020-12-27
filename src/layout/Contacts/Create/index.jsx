@@ -1,4 +1,5 @@
 import React from 'react';
+import { Prompt } from 'react-router-dom';
 import {
   Button,
   Card,
@@ -11,9 +12,22 @@ import Header from '../../../components/Header';
 import countries from '../../../utils/countries';
 import './index.css';
 
-const CreateContact = ({ onChange, onSubmit, formInvalid, loading }) => {
+const CreateContact = ({
+  onChange,
+  onSubmit,
+  formInvalid,
+  loading,
+  formIsHalfFilled,
+}) => {
   return (
     <div>
+      <Prompt
+        when={formIsHalfFilled}
+        message={JSON.stringify({
+          header: 'Confirm',
+          content: 'You have unsaved changes, Are you sure you want to leave?',
+        })}
+      />
       <Header />
       <Grid centered>
         <Grid.Column className='form-column'>

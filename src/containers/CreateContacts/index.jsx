@@ -25,6 +25,10 @@ const CreateContactContainer = () => {
     };
   }, [data]);
 
+  const formIsHalfFilled =
+    Object.values(form).filter((item) => item && item !== '')?.length > 0 &&
+    !data;
+
   console.log('loading :>> ', loading);
 
   const onChange = (e, { name, value }) => {
@@ -48,6 +52,7 @@ const CreateContactContainer = () => {
       onChange={onChange}
       form={form}
       loading={loading}
+      formIsHalfFilled={formIsHalfFilled}
     />
   );
 };
