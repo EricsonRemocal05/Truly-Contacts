@@ -12,8 +12,15 @@ const ContactsContainer = () => {
 
   console.log('contactsState :>> ', contactsState);
 
+  const {
+    contacts: { data },
+  } = contactsState;
+
   useEffect(() => {
-    getContacts(history)(contactsDispatch);
+    if (data.length === 0) {
+      getContacts(history)(contactsDispatch);
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
