@@ -1,1 +1,1 @@
-export const CONNECTION_FAILURE = 'Could not connect try again later';
+export const CONNECTION_ERROR = 'Could not connect try again';

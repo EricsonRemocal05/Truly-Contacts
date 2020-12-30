@@ -1,9 +1,8 @@
-import { useContext, useState, useEffect } from 'react';
+import { useState, useContext, useEffect } from 'react';
+import { GlobalContext } from '../../context/Provider';
 import { useHistory } from 'react-router-dom';
 import { login } from '../../context/actions/auth/login';
-import { GlobalContext } from '../../context/Provider';
 
-/* eslint import/no-anonymous-default-export: [2, {"allowArrowFunction": true}] */
 export default () => {
   const [form, setForm] = useState({});
 
@@ -16,20 +15,15 @@ export default () => {
     },
   } = useContext(GlobalContext);
 
-  console.log('error :>> ', error);
-
   const onChange = (e, { name, value }) => {
     setForm({ ...form, [name]: value });
   };
-
-  console.log('form :>> ', form);
-
-  console.log('form :>> ', form);
 
   const loginFormValid = !form.username?.length || !form.password?.length;
 
   const onSubmit = () => {
     // register(form)(authDispatch);
+
     login(form)(authDispatch);
   };
 
@@ -41,5 +35,5 @@ export default () => {
     }
   }, [data]);
 
-  return { form, onChange, loading, loginFormValid, onSubmit, error };
+  return { form, onChange, loading, error, loginFormValid, onSubmit };
 };

@@ -1,31 +1,32 @@
 import React, { useRef } from 'react';
-import { Prompt } from 'react-router-dom';
+import Header from '../../../components/Header';
+import './index.css';
+
 import {
-  Button,
+  Grid,
+  Header as SemanticHeader,
   Card,
   Form,
-  Grid,
+  Button,
   Select,
-  Header as SemanticHeader,
   Icon,
   Image,
 } from 'semantic-ui-react';
-import Header from '../../../components/Header';
 import countries from '../../../utils/countries';
-import './index.css';
+import { Prompt } from 'react-router-dom';
 
 const CreateContact = ({
   onChange,
-  onSubmit,
   formInvalid,
-  loading,
   formIsHalfFilled,
+  loading,
+  onSubmit,
   onImageChange,
   tempFile,
 }) => {
   const imagePickRef = useRef(null);
 
-  const chooseImage = () => {
+  const choseImage = () => {
     if (imagePickRef.current) {
       imagePickRef.current.click();
     }
@@ -40,10 +41,12 @@ const CreateContact = ({
           content: 'You have unsaved changes, Are you sure you want to leave?',
         })}
       />
+
       <Header />
       <Grid centered>
         <Grid.Column className='form-column'>
           <SemanticHeader>Create Contact</SemanticHeader>
+
           <Card fluid>
             <Card.Content>
               <Form unstackable>
@@ -51,58 +54,59 @@ const CreateContact = ({
                   onChange={onImageChange}
                   ref={imagePickRef}
                   type='file'
+                  accept='images/*'
                   hidden
                 />
 
                 <div className='image-wrapper'>
                   {tempFile && (
-                    <Image className='contact-picture' src={tempFile} />
+                    <Image className='contactpicture' src={tempFile} />
                   )}
                   {!tempFile && (
-                    <div onClick={chooseImage} className='contact-picture'>
+                    <div onClick={choseImage} className='contactpicture'>
                       <span>Choose Picture</span>
                     </div>
                   )}
 
-                  <Icon name='pencil' onClick={chooseImage} />
+                  <Icon name='pencil' onClick={choseImage} />
                 </div>
 
                 <Form.Group widths={2}>
                   <Form.Input
-                    label='First Name'
+                    label='First name'
                     name='firstName'
                     onChange={onChange}
-                    placeholder='First Name'
+                    placeholder='First name'
                   />
                   <Form.Input
-                    label='Last Name'
                     name='lastName'
                     onChange={onChange}
-                    placeholder='Last Name'
+                    label='Last name'
+                    placeholder='Last name'
                   />
                 </Form.Group>
                 <Form.Group widths={2}>
                   <Form.Input
-                    label='Country'
                     name='countryCode'
+                    onChange={onChange}
                     control={Select}
                     options={countries}
-                    onChange={onChange}
+                    label='Country'
                     placeholder='Country'
                   />
                   <Form.Input
-                    label='PhoneNumber'
                     name='phoneNumber'
                     onChange={onChange}
+                    label='PhoneNumber'
                     placeholder='Phone Number'
                   />
                 </Form.Group>
                 <Form.Checkbox
-                  label='Add to favorites'
                   name='isFavorite'
                   onChange={(e, data) => {
                     onChange(e, { name: 'isFavorite', value: data.checked });
                   }}
+                  label='Add to favorites'
                 />
                 <Button
                   disabled={formInvalid || loading}

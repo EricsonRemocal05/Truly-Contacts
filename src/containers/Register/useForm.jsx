@@ -1,9 +1,8 @@
-import { useContext, useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-import { register } from '../../context/actions/auth/register';
+import { useState, useContext, useEffect } from 'react';
 import { GlobalContext } from '../../context/Provider';
+import { register } from '../../context/actions/auth/register';
+import { useHistory } from 'react-router-dom';
 
-/* eslint import/no-anonymous-default-export: [2, {"allowArrowFunction": true}] */
 export default () => {
   const [form, setForm] = useState({});
   const [fieldErrors, setFieldErrors] = useState({});
@@ -31,24 +30,16 @@ export default () => {
     }
   }, [data]);
 
-  console.log('error :>> ', error);
-
-  console.log('data :>> ', data);
-
-  console.log('authState :>> ', loading);
-
   const onChange = (e, { name, value }) => {
     setForm({ ...form, [name]: value });
   };
-
-  console.log('form :>> ', form);
 
   const registerFormValid =
     !form.username?.length ||
     !form.firstName?.length ||
     !form.lastName?.length ||
-    !form.email?.length ||
-    !form.password?.length;
+    !form.password?.length ||
+    !form.email?.length;
 
   const onSubmit = () => {
     setFieldErrors({});

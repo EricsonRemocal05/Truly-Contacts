@@ -1,9 +1,9 @@
+import axiosInstance from '../../../helpers/axiosInstance';
 import {
-  REGISTER_FAILURE,
   REGISTER_LOADING,
   REGISTER_SUCCESS,
+  REGISTER_ERROR,
 } from '../../../constants/actionTypes';
-import axiosInstance from '../../../helpers/axiosInstance';
 
 export const register = ({
   email,
@@ -15,6 +15,7 @@ export const register = ({
   dispatch({
     type: REGISTER_LOADING,
   });
+
   axiosInstance()
     .post('/auth/register', {
       email,
@@ -29,10 +30,10 @@ export const register = ({
         payload: res.data,
       });
     })
-    .catch((err) =>
+    .catch((err) => {
       dispatch({
-        type: REGISTER_FAILURE,
-        payload: err.response.data ? err.response.data : 'COULD NOT CONNECT',
-      })
-    );
+        type: REGISTER_ERROR,
+        payload: err.response ? err.response.data : 'COULD NOT CONNECT',
+      });
+    });
 };

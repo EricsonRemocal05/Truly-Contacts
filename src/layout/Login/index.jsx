@@ -1,24 +1,26 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import {
-  Button,
   Form,
+  Button,
   Grid,
   Header as SemanticHeader,
-  Message,
   Segment,
+  Message,
 } from 'semantic-ui-react';
 import Header from '../../components/Header';
+import { Link } from 'react-router-dom';
 
 const LoginUI = ({
-  form: { onChange, form, loginFormValid, onSubmit, loading, error },
+  form: { onChange, form, loginFormValid, error, onSubmit, loading },
 }) => {
   return (
     <div>
       <Header />
+
       <Grid centered>
         <Grid.Column style={{ maxWidth: 550, marginTop: 20 }}>
-          <SemanticHeader>Login Here</SemanticHeader>
+          <SemanticHeader>Login to your account</SemanticHeader>
+
           <Segment>
             <Form>
               {error && <Message content={error?.detail} negative />}
@@ -36,12 +38,13 @@ const LoginUI = ({
                 <Form.Input
                   value={form.password || ''}
                   onChange={onChange}
-                  name='password'
                   type='password'
+                  name='password'
                   placeholder='Password'
                   label='Password'
                 />
               </Form.Field>
+
               <Button
                 onClick={onSubmit}
                 disabled={loginFormValid || loading}
@@ -52,8 +55,9 @@ const LoginUI = ({
               >
                 Submit
               </Button>
+
               <Segment>
-                Need an account? <Link to='/auth/register'>Register.</Link>
+                Need an account <Link to='/auth/register'>Register</Link>.
               </Segment>
             </Form>
           </Segment>

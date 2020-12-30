@@ -1,30 +1,40 @@
 import React, { useContext, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-import getContacts from '../../context/actions/contacts/getContacts';
 import { GlobalContext } from '../../context/Provider';
-import ContactListUI from '../../layout/Contacts/List';
+import getContacts from '../../context/actions/contacts/getContacts';
+import { useHistory } from 'react-router-dom';
+import ContactsListUI from '../../layout/Contacts/List';
+import deleteContact from '../../context/actions/contacts/deleteContact';
+import startUnstar from '../../context/actions/contacts/startUnstar';
 
 const ContactsContainer = () => {
   const { contactsDispatch, contactsState } = useContext(GlobalContext);
 
   const history = useHistory();
-  // console.log(context);
-
-  console.log('contactsState :>> ', contactsState);
 
   const {
     contacts: { data },
   } = contactsState;
 
+  const handleDeleteContact = (id) => {
+    deleteContact(id)(contactsDispatch);
+  };
+
+  const handleStarUnstarContact = (id, is_favorite) => {
+    startUnstar(id, !is_favorite)(contactsDispatch);
+  };
   useEffect(() => {
     if (data.length === 0) {
       getContacts(history)(contactsDispatch);
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return <ContactListUI state={contactsState} />;
+  return (
+    <ContactsListUI
+      state={contactsState}
+      deleteContact={handleDeleteContact}
+      starUnstarContact={handleStarUnstarContact}
+    />
+  );
 };
 
 export default ContactsContainer;

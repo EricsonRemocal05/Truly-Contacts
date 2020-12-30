@@ -1,26 +1,44 @@
 import React from 'react';
 import {
-  Container,
-  Image,
-  List,
-  Message,
   Placeholder,
+  List,
+  Image,
+  Container,
+  Message,
+  Header,
+  Button,
+  Icon,
 } from 'semantic-ui-react';
-import Header from '../../../components/Header';
+import AppHeader from '../../../components/Header';
+import ImageThumb from '../../../components/ImageThumb';
+import Favorites from '../Favorites';
 
-const ContactListUI = ({
+const ContactsListUI = ({
+  deleteContact,
+  starUnstarContact,
   state: {
-    contacts: { loading, error, data },
+    contacts: { loading, isSearchActive, foundContacts, data },
   },
 }) => {
-  console.log('loading :>> ', loading);
-  console.log('data :>> ', data);
+  const currentContacts = isSearchActive ? foundContacts : data;
+
+  console.log('currentContacts', currentContacts);
   return (
     <div>
-      <Header />
+      <AppHeader />
       <Container>
+        <Header>STARRED</Header>
+
+        <Favorites
+          favorites={currentContacts.filter((item) => item.is_favorite)}
+          loading={loading}
+        />
+
+        <Header>ALL</Header>
+
         {loading && (
           <>
+            {' '}
             <Placeholder>
               <Placeholder.Header image>
                 <Placeholder.Line />
@@ -35,27 +53,48 @@ const ContactListUI = ({
             </Placeholder>
           </>
         )}
-
-        {!loading && data.length === 0 && (
-          <Message content='No Contacts is here' />
+        {!loading && currentContacts.length === 0 && (
+          <Message content='No Contacts to show' />
         )}
 
         <List>
-          {data.length > 0 &&
-            data.map((contact) => (
-              <List.Item key={contact.id}>
+          {currentContacts.length > 0 &&
+            currentContacts.map((contact) => (
+              <List.Item key={contact.id} disabled={contact.deleting}>
                 <List.Content floated='right'>
-                  <span>{contact.phone_number}</span>
+                  <span>
+                    {contact.country_code}
+                    {contact.phone_number}
+                  </span>{' '}
+                  <Button
+                    color='red'
+                    size='tiny'
+                    onClick={() => {
+                      deleteContact(contact.id);
+                    }}
+                  >
+                    <Icon name='delete' />
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      starUnstarContact(contact.id, contact.is_favorite);
+                    }}
+                  >
+                    {contact.is_favorite ? 'UNSTAR' : 'STAR'}
+                  </Button>
                 </List.Content>
                 <List.Content style={{ display: 'flex', alignItems: 'center' }}>
-                  <Image
+                  <ImageThumb
                     circular
-                    width={45}
-                    height={45}
+                    firstName={contact.first_name}
+                    lastName={contact.last_name}
                     src={contact.contact_picture}
+                    style={{ width: 45, height: 45 }}
                   />
+
                   <span>
                     {contact.first_name} {contact.last_name}
+                    {contact.is_favorite && <Icon name='heart' color='red' />}
                   </span>
                 </List.Content>
               </List.Item>
@@ -66,4 +105,4 @@ const ContactListUI = ({
   );
 };
 
-export default ContactListUI;
+export default ContactsListUI;

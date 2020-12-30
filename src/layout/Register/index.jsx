@@ -1,13 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import {
-  Button,
   Form,
+  Button,
   Grid,
   Header as SemanticHeader,
   Segment,
 } from 'semantic-ui-react';
 import Header from '../../components/Header';
+import { Link } from 'react-router-dom';
 
 const RegisterUI = ({
   form: { onChange, form, registerFormValid, onSubmit, loading, fieldErrors },
@@ -15,9 +15,11 @@ const RegisterUI = ({
   return (
     <div>
       <Header />
+
       <Grid centered>
         <Grid.Column style={{ maxWidth: 550, marginTop: 20 }}>
           <SemanticHeader>Signup Here</SemanticHeader>
+
           <Segment>
             <Form>
               <Form.Field>
@@ -85,8 +87,8 @@ const RegisterUI = ({
                 <Form.Input
                   value={form.password || ''}
                   onChange={onChange}
-                  name='password'
                   type='password'
+                  name='password'
                   placeholder='Password'
                   label='Password'
                   error={
@@ -97,6 +99,7 @@ const RegisterUI = ({
                   }
                 />
               </Form.Field>
+
               <Button
                 onClick={onSubmit}
                 disabled={registerFormValid || loading}
@@ -107,10 +110,11 @@ const RegisterUI = ({
               >
                 Submit
               </Button>
-              <Segment>
-                Already have an account? <Link to='/auth/login'>Login.</Link>
-              </Segment>
             </Form>
+
+            <Segment>
+              Already have an account? <Link to='/auth/login'>Login</Link>.
+            </Segment>
           </Segment>
         </Grid.Column>
       </Grid>

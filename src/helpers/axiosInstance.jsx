@@ -1,11 +1,9 @@
 import axios from 'axios';
 
-/* eslint import/no-anonymous-default-export: [2, {"allowArrowFunction": true}] */
 export default (history = null) => {
   const baseURL = process.env.REACT_APP_BACKEND_URL;
-  let headers = {};
 
-  console.log(baseURL);
+  let headers = {};
 
   if (localStorage.token) {
     headers.Authorization = `Bearer ${localStorage.token}`;

@@ -1,9 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import createContact from '../../context/actions/contacts/createContact';
-import { GlobalContext } from '../../context/Provider';
+import React, { useState, useContext, useEffect } from 'react';
+import Header from '../../components/Header';
 import CreateContact from '../../layout/Contacts/Create';
-import clearCreateContacts from '../../context/actions/contacts/clearCreateContacts';
+import createContact from '../../context/actions/contacts/createContact';
+import clearCreateContact from '../../context/actions/contacts/clearCreateContact';
+import { GlobalContext } from '../../context/Provider';
+import { useHistory } from 'react-router-dom';
 
 const CreateContactContainer = () => {
   const [form, setForm] = useState({});
@@ -21,7 +22,6 @@ const CreateContactContainer = () => {
     e.persist();
     const fileURL = e.target.files[0];
     setForm({ ...form, contactPicture: fileURL });
-
     if (fileURL) {
       setTempFile(URL.createObjectURL(fileURL));
     }
@@ -32,7 +32,7 @@ const CreateContactContainer = () => {
       history.push('/');
     }
     return () => {
-      clearCreateContacts()(contactsDispatch);
+      clearCreateContact()(contactsDispatch);
     };
   }, [data]);
 
@@ -40,11 +40,13 @@ const CreateContactContainer = () => {
     Object.values(form).filter((item) => item && item !== '')?.length > 0 &&
     !data;
 
-  console.log('loading :>> ', loading);
+  console.log('addContact loading', loading);
 
   const onChange = (e, { name, value }) => {
     setForm({ ...form, [name]: value });
   };
+
+  console.log('form', form);
 
   const onSubmit = () => {
     createContact(form)(contactsDispatch);
@@ -62,8 +64,8 @@ const CreateContactContainer = () => {
       formInvalid={formInvalid}
       onChange={onChange}
       form={form}
-      loading={loading}
       formIsHalfFilled={formIsHalfFilled}
+      loading={loading}
       onImageChange={onImageChange}
       tempFile={tempFile}
     />

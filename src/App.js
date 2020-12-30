@@ -1,3 +1,6 @@
+import React, { useState, Suspense } from 'react';
+import logo from './assets/images/logo.svg';
+import './App.css';
 import {
   BrowserRouter as Router,
   Switch,
@@ -6,21 +9,17 @@ import {
 } from 'react-router-dom';
 import routes from './routes';
 import 'semantic-ui-css/semantic.min.css';
-import './App.css';
 import { GlobalProvider } from './context/Provider';
 import isAuthenticated from './utils/isAuthenticated';
-import { useState } from 'react';
 import UserLeaveConfirmation from './components/UserLeaveConfirmation';
 
 const RenderRoute = (route) => {
   const history = useHistory();
 
   document.title = route.title || 'TrulyContacts';
-
   if (route.needsAuth && !isAuthenticated()) {
     history.push('/auth/login');
   }
-
   return (
     <Route
       path={route.path}
@@ -32,7 +31,6 @@ const RenderRoute = (route) => {
 
 function App() {
   const [confirmOpen, setConfirmOpen] = useState(true);
-
   return (
     <GlobalProvider>
       <Router
@@ -45,11 +43,13 @@ function App() {
           );
         }}
       >
-        <Switch>
-          {routes.map((route, index) => (
-            <RenderRoute {...route} key={index} />
-          ))}
-        </Switch>
+        <Suspense fallback={<p>Loading</p>}>
+          <Switch>
+            {routes.map((route, index) => (
+              <RenderRoute {...route} key={index} />
+            ))}
+          </Switch>
+        </Suspense>
       </Router>
     </GlobalProvider>
   );

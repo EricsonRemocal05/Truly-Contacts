@@ -1,10 +1,9 @@
+import axiosInstance from '../../../helpers/axiosInstance';
 import {
-  LOGIN_FAILURE,
   LOGIN_LOADING,
   LOGIN_SUCCESS,
+  LOGIN_ERROR,
 } from '../../../constants/actionTypes';
-import axiosInstance from '../../../helpers/axiosInstance';
-
 export const login = ({ password, username }) => (dispatch) => {
   dispatch({
     type: LOGIN_LOADING,
@@ -22,10 +21,10 @@ export const login = ({ password, username }) => (dispatch) => {
         payload: res.data,
       });
     })
-    .catch((err) =>
+    .catch((err) => {
       dispatch({
-        type: LOGIN_FAILURE,
-        payload: err.response.data ? err.response.data : 'COULD NOT CONNECT',
-      })
-    );
+        type: LOGIN_ERROR,
+        payload: err.response ? err.response.data : 'COULD NOT CONNECT',
+      });
+    });
 };

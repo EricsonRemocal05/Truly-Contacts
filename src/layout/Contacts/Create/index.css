@@ -2,12 +2,12 @@
   max-width: 650px;
   margin-top: 15px;
 }
-
-.contact-picture {
+.contactpicture {
   width: 175px;
   height: 175px;
   border: 1px solid gray;
   margin: 15px auto;
+
   display: flex;
   align-items: center;
   justify-content: center;
